@@ -13,10 +13,6 @@ class Customer extends Model
         'status',
     ];
 
-    public static function width(string $string)
-    {
-    }
-
     public function tasks(){
         return $this->hasMany(Tasks::class, 'costumer_id');
     }
