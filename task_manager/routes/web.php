@@ -19,4 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-    Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::get('/tasks', 'TaskController@index')->name('tasks');
+Route::post('/save_task', 'TaskController@save_task')->name('save_task');
+
+
+Route::get('/customers', 'CustomersController@index')->name('customers');
