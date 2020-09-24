@@ -14,36 +14,50 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
-    public function save_task(Request $request){
+    public function index(){
         try {
 
-            DB::table('customer')->insert([
-                'name' => $request->name,
-                'email' => $request->email,
-                'status' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            DB::table('tasks')->insert([
-                'subject' => $request->subject,
-                'content' => $request->task_content,
-                'due_date' => now(),
-                'status' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            return Redirect::back()->with('message','Sikeres hiba bejelentés!');
+            $tasks = DB::table('tasks')
+                ->join('customer', 'tasks.customer_id', 'customer.id')
+                ->select('tasks.*', 'customer.*', 'tasks.id as task_id')
+                ->get();
 
         } catch (ModelNotFoundException $exception) {
             abort(404);
         }
 
+        $data = [
+            'tasks' => $tasks
+        ];
+
+        return view('tasks')->with($data);
     }
+
+
+    public function search_task(Request $request){
+        try {
+
+            $tasks = DB::table('tasks')
+                ->join('customer', 'tasks.customer_id', 'customer.id')
+                ->select('tasks.*', 'customer.*', 'tasks.id as task_id')
+                ->where('customer.name', 'like', '%'.$request->name.'%')
+                ->get();
+
+        } catch (ModelNotFoundException $exception) {
+            abort(404);
+        }
+
+        $data = [
+            'tasks' => $tasks
+        ];
+
+        return view('tasks')->with($data);
+
+    }
+
 }

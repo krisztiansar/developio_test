@@ -61,8 +61,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a  class="dropdown-item" href="/">Ügyfelek</a>
-                                    <a  class="dropdown-item" href="/">Hiba jegyek</a>
+                                    <a  class="dropdown-item" href="/tasks">Hibajegyek</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

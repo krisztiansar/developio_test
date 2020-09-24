@@ -24,7 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/tasks', 'TaskController@index')->name('tasks');
-Route::post('/save_task', 'TaskController@save_task')->name('save_task');
+Route::get('/search_task', 'TaskController@search_task')->name('search_task');
 
+Route::post('/save_task', 'TaskContactController@save_task')->name('save_task');
 
 Route::get('/customers', 'CustomersController@index')->name('customers');
