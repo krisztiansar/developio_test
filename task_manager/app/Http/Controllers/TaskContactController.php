@@ -36,7 +36,7 @@ class TaskContactController extends Controller
                 'customer_id' => $last_id,
                 'subject' => $request->subject,
                 'content' => $request->task_content,
-                'due_date' => now(),
+                'due_date' => now(+16),
                 'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

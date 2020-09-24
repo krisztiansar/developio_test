@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
+use App\Task;
+use App\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -19,13 +22,10 @@ class TaskController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
+    public function index(Tasks $tasks){
         try {
 
-            $tasks = DB::table('tasks')
-                ->join('customer', 'tasks.customer_id', 'customer.id')
-                ->select('tasks.*', 'customer.*', 'tasks.id as task_id')
-                ->get();
+            $tasks = $tasks::with('customer')->orderBy('updated_at', 'desc')->paginate(15);
 
         } catch (ModelNotFoundException $exception) {
             abort(404);
@@ -38,15 +38,13 @@ class TaskController extends Controller
         return view('tasks')->with($data);
     }
 
-
-    public function search_task(Request $request){
+    public function search_task(Tasks $tasks, Request $request){
         try {
 
-            $tasks = DB::table('tasks')
-                ->join('customer', 'tasks.customer_id', 'customer.id')
-                ->select('tasks.*', 'customer.*', 'tasks.id as task_id')
-                ->where('customer.name', 'like', '%'.$request->name.'%')
-                ->get();
+            $slug = $request->name;
+            $tasks = $tasks::whereHas('customer', function($query) use ($slug){
+                $query->where('name', 'like', '%'.$slug.'%');
+            })->paginate(15);
 
         } catch (ModelNotFoundException $exception) {
             abort(404);
