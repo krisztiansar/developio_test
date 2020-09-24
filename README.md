@@ -1,9 +1,8 @@
 # developio_test
 Test project for Developio.
 
-
-# Run in localhost
-Clone the repo
-Edit the database connection in the .env file.
-Run Php artisan migrate
-Run Php artisan serve
+<h2>Run in localhost</h2>
+<p>Clone the repo</p>
+<p>Edit the database connection in the .env file.</p>
+<p>Run Php artisan migrate</p>
+<p>Run Php artisan serve</p>
